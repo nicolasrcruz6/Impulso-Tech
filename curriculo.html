@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Criar Currículo | Impulso Tech</title>
+    <link rel="icon" type="image/png" sizes="512x512" href="assets/favicon-impulso-tech.png" />
+    <link rel="apple-touch-icon" href="assets/favicon-impulso-tech.png" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header compact">
+      <a class="brand" href="index.html" aria-label="Voltar para o Impulso Tech">
+        <img src="assets/logo-impulso-tech.png" alt="" class="brand-logo" />
+        <span>Impulso Tech</span>
+      </a>
+
+      <nav class="top-nav" aria-label="Navegação principal">
+        <a href="index.html#inicio">Início</a>
+        <a href="index.html#sobre">Sobre</a>
+        <a href="index.html#cursos">Cursos</a>
+        <a href="aprendizagem.html">Aprendizado</a>
+        <a href="curriculo.html" aria-current="page">Criar Currículo</a>
+        <a href="index.html#contato">Contato</a>
+      </nav>
+    </header>
+
+    <main class="builder-page">
+      <section class="builder-heading">
+        <div>
+          <p class="eyebrow">Ferramenta gratuita</p>
+          <h1>Gerador de Currículo</h1>
+        </div>
+        <p>
+          Preencha as informações principais e acompanhe a prévia em tempo real. Você pode
+          adicionar mais experiências, cursos e idiomas quando precisar.
+        </p>
+      </section>
+
+      <section class="builder-layout" aria-label="Gerador de currículo">
+        <form class="resume-form advanced" id="resumeForm">
+          <div class="progress-box" aria-label="Progresso do currículo">
+            <div class="progress-top">
+              <strong>Currículo completo</strong>
+              <span id="progressText">0%</span>
+            </div>
+            <div class="progress-track">
+              <span id="progressBar"></span>
+            </div>
+          </div>
+
+          <fieldset>
+            <legend>1. Informações pessoais</legend>
+            <div class="form-row">
+              <label>
+                Nome completo
+                <input name="nome" type="text" placeholder="Ex.: Ana Souza" required />
+              </label>
+              <label>
+                Idade
+                <input name="idade" type="number" min="14" max="100" placeholder="18" />
+              </label>
+            </div>
+
+            <div class="form-row">
+              <label>
+                Cidade/Estado
+                <input name="cidade" type="text" placeholder="Ex.: Rio de Janeiro/RJ" />
+              </label>
+              <label>
+                Telefone
+                <input name="telefone" type="tel" inputmode="numeric" maxlength="15" placeholder="(21) 99999-9999" />
+              </label>
+            </div>
+
+            <div class="form-row">
+              <label>
+                E-mail
+                <input name="email" type="email" placeholder="seunome@email.com" />
+              </label>
+              <label>
+                Foto opcional
+                <input name="foto" id="photoInput" type="file" accept="image/*" />
+              </label>
+            </div>
+
+            <label class="check-line">
+              <input type="checkbox" name="mostrarFoto" checked />
+              Mostrar foto no currículo
+            </label>
+          </fieldset>
+
+          <fieldset>
+            <legend>2. Objetivo profissional</legend>
+            <label>
+              Objetivo
+              <textarea name="objetivo" rows="3" placeholder="Ex.: Atuar na área de tecnologia e desenvolvimento."></textarea>
+            </label>
+            <div class="helper-actions compact-actions">
+              <button type="button" class="button small secondary" data-suggestion="first-job">
+                Primeira oportunidade
+              </button>
+              <button type="button" class="button small secondary" data-suggestion="technology">
+                Área de tecnologia
+              </button>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>3. Experiência profissional</legend>
+            <div class="repeat-list" id="experienceList">
+              <div class="repeat-item" data-experience>
+                <div class="form-row">
+                  <label>
+                    Empresa
+                    <input data-field="empresa" type="text" placeholder="Ex.: Hospital Esperança" />
+                  </label>
+                  <label>
+                    Cargo
+                    <input data-field="cargo" type="text" placeholder="Ex.: Estagiária" />
+                  </label>
+                </div>
+                <label>
+                  Período
+                  <input data-field="periodo" type="text" placeholder="Ex.: Set. 2026 - Atual" />
+                </label>
+                <label>
+                  Descrição das atividades
+                  <textarea data-field="descricao" rows="3" placeholder="Ex.: Apoio em rotinas administrativas e atendimento ao público."></textarea>
+                </label>
+              </div>
+            </div>
+            <button type="button" class="button small secondary add-button" id="addExperience">
+              Adicionar experiência
+            </button>
+          </fieldset>
+
+          <fieldset>
+            <legend>4. Escolaridade</legend>
+            <div class="form-row">
+              <label>
+                Nível escolar
+                <select name="nivelEscolar">
+                  <option value="">Selecione</option>
+                  <option>Ensino Fundamental</option>
+                  <option>Ensino Médio</option>
+                  <option>Curso Técnico</option>
+                  <option>Ensino Superior</option>
+                  <option>Pós-graduação</option>
+                </select>
+              </label>
+              <label>
+                Ano de conclusão
+                <input name="anoConclusao" type="text" placeholder="Ex.: 2026" />
+              </label>
+            </div>
+            <label>
+              Nome da instituição
+              <input name="instituicao" type="text" placeholder="Ex.: Centro Universitário IBMR" />
+            </label>
+            <label class="check-line">
+              <input type="checkbox" name="cursando" />
+              Ainda estou cursando
+            </label>
+          </fieldset>
+
+          <fieldset>
+            <legend>5. Cursos e certificações</legend>
+            <div class="repeat-list" id="courseList">
+              <div class="repeat-item" data-course>
+                <div class="form-row">
+                  <label>
+                    Nome do curso
+                    <input data-field="nome" type="text" placeholder="Ex.: Assistente administrativo" />
+                  </label>
+                  <label>
+                    Instituição
+                    <input data-field="instituicao" type="text" placeholder="Ex.: Senat" />
+                  </label>
+                </div>
+                <div class="form-row">
+                  <label>
+                    Carga horária
+                    <input data-field="carga" type="text" placeholder="Ex.: 160 horas" />
+                  </label>
+                  <label>
+                    Ano
+                    <input data-field="ano" type="text" placeholder="Ex.: 2025" />
+                  </label>
+                </div>
+              </div>
+            </div>
+            <button type="button" class="button small secondary add-button" id="addCourse">
+              Adicionar curso
+            </button>
+          </fieldset>
+
+          <fieldset>
+            <legend>6. Habilidades</legend>
+            <div class="form-row">
+              <label>
+                Área de interesse
+                <select name="areaInteresse" id="areaInteresse">
+                  <option value="">Selecione</option>
+                  <option value="programacao">Programação</option>
+                  <option value="administrativo">Administrativo</option>
+                  <option value="atendimento">Atendimento</option>
+                  <option value="saude">Saúde</option>
+                </select>
+              </label>
+              <label>
+                Nível geral
+                <select name="nivelHabilidade">
+                  <option>Básico</option>
+                  <option>Intermediário</option>
+                  <option>Avançado</option>
+                </select>
+              </label>
+            </div>
+            <label>
+              Habilidades
+              <textarea name="habilidades" rows="4" placeholder="Ex.: Comunicação&#10;Pacote Office&#10;Trabalho em equipe"></textarea>
+            </label>
+            <div class="helper-actions compact-actions">
+              <button type="button" class="button small secondary" data-suggestion="skills">
+                Sugerir habilidades
+              </button>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>7. Idiomas</legend>
+            <div class="repeat-list" id="languageList">
+              <div class="repeat-item" data-language>
+                <div class="form-row">
+                  <label>
+                    Idioma
+                    <input data-field="idioma" type="text" placeholder="Ex.: Inglês" />
+                  </label>
+                  <label>
+                    Nível
+                    <select data-field="nivel">
+                      <option value="">Selecione</option>
+                      <option>Básico</option>
+                      <option>Intermediário</option>
+                      <option>Avançado</option>
+                      <option>Fluente</option>
+                    </select>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <button type="button" class="button small secondary add-button" id="addLanguage">
+              Adicionar idioma
+            </button>
+          </fieldset>
+
+          <fieldset>
+            <legend>8. Trabalho voluntário</legend>
+            <label>
+              Descrição
+              <textarea name="voluntario" rows="3" placeholder="Ex.: Auxílio em projeto comunitário de inclusão digital."></textarea>
+            </label>
+          </fieldset>
+
+          <fieldset>
+            <legend>9. Personalização</legend>
+            <div class="form-row">
+              <label>
+                Cor principal
+                <input name="corPrincipal" type="color" value="#2563eb" />
+              </label>
+              <label>
+                Estilo do cabeçalho
+                <select name="estiloCabecalho">
+                  <option value="simples">Simples</option>
+                  <option value="faixa">Faixa colorida</option>
+                  <option value="escuro">Escuro</option>
+                </select>
+              </label>
+            </div>
+            <div class="form-row">
+              <label>
+                Tamanho do texto
+                <select name="tamanhoTexto">
+                  <option value="compacto">Compacto</option>
+                  <option value="normal" selected>Normal</option>
+                  <option value="grande">Grande</option>
+                </select>
+              </label>
+              <label>
+                Formato da foto
+                <select name="formatoFoto">
+                  <option value="quadrada">Quadrada</option>
+                  <option value="redonda">Redonda</option>
+                </select>
+              </label>
+            </div>
+          </fieldset>
+
+          <div class="form-actions">
+            <button type="submit" class="button primary">Visualizar Currículo</button>
+            <button type="button" class="button secondary" id="downloadPdf">Baixar PDF</button>
+            <button type="button" class="button secondary" id="printResume">Imprimir</button>
+            <button type="button" class="button ghost dark-ghost" id="shareResume">Compartilhar</button>
+          </div>
+        </form>
+
+        <aside class="preview-panel" aria-label="Prévia do currículo">
+          <div class="resume-paper" id="resumePreview" data-header="simples" data-font="normal" data-photo="quadrada">
+            <header class="resume-head">
+              <div>
+                <h2>Seu nome</h2>
+                <p>Telefone | E-mail | Cidade/Estado</p>
+              </div>
+            </header>
+            <section>
+              <h3>Objetivo</h3>
+              <p>Preencha o formulário para gerar a prévia do currículo.</p>
+            </section>
+          </div>
+        </aside>
+      </section>
+    </main>
+
+    <footer class="site-footer full-footer">
+      <div class="footer-column footer-about">
+        <a class="brand" href="index.html" aria-label="Impulso Tech">
+          <img src="assets/logo-impulso-tech.png" alt="" class="brand-logo" />
+          <span>Impulso Tech</span>
+        </a>
+        <p>
+          Inclusão digital, cursos gratuitos e ferramentas práticas para ajudar a comunidade a
+          conquistar novas oportunidades.
+        </p>
+      </div>
+
+      <div class="footer-column">
+        <h3>Links úteis</h3>
+        <a href="index.html#inicio">Início</a>
+        <a href="index.html#sobre">Sobre o projeto</a>
+        <a href="index.html#cursos">Cursos</a>
+        <a href="aprendizagem.html">Aprendizado</a>
+        <a href="index.html#contato">Contato</a>
+      </div>
+
+      <div class="footer-column">
+        <h3>Ferramentas</h3>
+        <a href="curriculo.html">Gerador de currículo</a>
+        <a href="aprendizagem.html">Trilhas gratuitas</a>
+        <a href="index.html#contato">Inscrição no projeto</a>
+        <a href="index.html#contato">Tirar dúvidas</a>
+      </div>
+
+      <div class="footer-column">
+        <h3>Como participar</h3>
+        <a href="index.html#contato">Quero estudar</a>
+        <a href="index.html#contato">Quero ser voluntário</a>
+        <a href="index.html#contato">Doar computador</a>
+        <a href="index.html#contato">Indicar um espaço</a>
+      </div>
+
+      <div class="footer-column">
+        <h3>Siga o Impulso Tech</h3>
+        <a href="index.html#contato"><span class="social-mark">F</span> Facebook</a>
+        <a href="https://www.instagram.com/des.sistemas_2b/" target="_blank" rel="noreferrer"><span class="social-mark">I</span> Instagram</a>
+        <a href="https://www.youtube.com/@programacaoweb" target="_blank" rel="noreferrer"><span class="social-mark">Y</span> YouTube</a>
+        <a href="index.html#contato"><span class="social-mark">W</span> WhatsApp</a>
+      </div>
+
+      <div class="footer-bottom">
+        <span>Impulso Tech © 2026</span>
+        <span>Conectando pessoas ao futuro digital.</span>
+      </div>
+    </footer>
+  </body>
+</html>
